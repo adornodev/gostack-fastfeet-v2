@@ -20,7 +20,7 @@ class DeliveryManController {
       email: Yup.string()
         .email()
         .required(),
-      avatar_id: Yup.string(),
+      avatar_id: Yup.number().positive(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -36,9 +36,6 @@ class DeliveryManController {
     if (deliveryManExists) {
       return res.status(400).json({ error: 'Este Entregador já existe!' });
     }
-
-    const { filename } = req.file;
-    req.body.avatar_id = filename;
 
     const { avatar_id, name, email } = await DeliveryMan.create(req.body);
 
@@ -101,6 +98,13 @@ class DeliveryManController {
         error: 'Este entregador não está cadastrado para ser atualizado!',
       });
     }
+
+    await deliveryManExists.update(req.body);
+
+    return res.json({
+      success: true,
+      message: 'Entregador atualizado com sucesso',
+    });
   }
 
   async delete(req, res) {

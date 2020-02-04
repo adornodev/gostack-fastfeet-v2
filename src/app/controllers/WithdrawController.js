@@ -35,7 +35,8 @@ class WithdrawController {
 
     const orderOnDb = await Order.findByPk(orderId);
 
-    if (!orderOnDb) return res.status(400).json({ error: 'Order not found' });
+    if (!orderOnDb)
+      return res.status(400).json({ error: 'Encomenda não encontrada' });
 
     const { start_date } = req.body;
 

@@ -161,9 +161,7 @@ class OrderController {
       recipient_id: Yup.number()
         .positive()
         .required(),
-      deliveryman_id: Yup.number()
-        .positive()
-        .required(),
+      deliveryman_id: Yup.number().positive(),
       signature_id: Yup.number().positive(),
       product: Yup.string()
         .ensure()
@@ -186,10 +184,12 @@ class OrderController {
     if (!recipient)
       return res.status(400).json({ error: 'Destinatário não existe' });
 
-    const deliveryMan = await DeliveryMan.findByPk(deliveryman_id);
+    if (deliveryman_id) {
+      const deliveryMan = await DeliveryMan.findByPk(deliveryman_id);
 
-    if (!deliveryMan)
-      return res.status(400).json({ error: 'Entregador não existe' });
+      if (!deliveryMan)
+        return res.status(400).json({ error: 'Entregador não existe' });
+    }
 
     if (signature_id) {
       const signature = await File.findByPk(signature_id);

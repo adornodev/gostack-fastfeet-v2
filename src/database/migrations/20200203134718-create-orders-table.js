@@ -19,7 +19,7 @@ module.exports = {
         references: { model: 'deliverymen', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: false,
+        allowNull: true,
       },
       signature_id: {
         type: Sequelize.INTEGER,

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import 'express-async-errors';
 import multer from 'multer';
+import DeliveredController from './app/controllers/DeliveredController';
 import DeliveryManController from './app/controllers/DeliveryManController';
 import FileController from './app/controllers/FileController';
 import OrderController from './app/controllers/OrderController';
@@ -43,5 +44,10 @@ routes.get('/orders/:id', authMiddleware, OrderController.show);
 routes.get('/orders', authMiddleware, OrderController.index);
 
 routes.put('/withdraws/:deliveryMan_id/:order_id', WithdrawController.update);
+routes.put(
+  '/delivereds/:deliveryMan_id/:order_id',
+  upload.single('signature'),
+  DeliveredController.update
+);
 
 export default routes;

@@ -35,10 +35,10 @@ routes.delete('/deliverymen/:id', authMiddleware, DeliveryManController.delete);
 routes.get('/deliverymen/:id', authMiddleware, DeliveryManController.show);
 routes.get('/deliverymen', authMiddleware, DeliveryManController.index);
 
-routes.post('/order', authMiddleware, OrderController.store);
-routes.put('/order/:id', authMiddleware, OrderController.update);
-routes.delete('/order/:id', authMiddleware, OrderController.delete);
-routes.get('/order/:id', authMiddleware, OrderController.show);
-routes.get('/order', authMiddleware, OrderController.index);
+routes.post('/orders', authMiddleware, OrderController.store);
+routes.put('/orders/:id', authMiddleware, OrderController.update);
+routes.delete('/orders/:id', authMiddleware, OrderController.delete);
+routes.get('/orders/:id', authMiddleware, OrderController.show);
+routes.get('/orders', authMiddleware, OrderController.index);
 
 export default routes;

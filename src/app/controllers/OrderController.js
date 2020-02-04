@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import Queue from '../../lib/Queue';
+import OrderWithdrawMail from '../jobs/OrderWithdrawMail';
 import DeliveryMan from '../models/DeliveryMan';
 import File from '../models/File';
 import Order from '../models/Order';
@@ -184,8 +186,10 @@ class OrderController {
     if (!recipient)
       return res.status(400).json({ error: 'Destinatário não existe' });
 
+    let deliveryMan;
+
     if (deliveryman_id) {
-      const deliveryMan = await DeliveryMan.findByPk(deliveryman_id);
+      deliveryMan = await DeliveryMan.findByPk(deliveryman_id);
 
       if (!deliveryMan)
         return res.status(400).json({ error: 'Entregador não existe' });
@@ -200,7 +204,18 @@ class OrderController {
           .json({ error: 'A imagem da assinatura não existe' });
     }
 
-    const { id: newOrderId } = await Order.create(req.body);
+    const { id: newOrderId, ...order } = await Order.create(req.body);
+
+    if (deliveryman_id) {
+      // Enviar uma notificação para o entregador ficar ciente do pedido disponível para retirada
+      await Queue.add(OrderWithdrawMail.key, {
+        orderWithdrawNotificationData: {
+          recipient: recipient.dataValues,
+          deliveryMan: deliveryMan.dataValues,
+          order: order.dataValues,
+        },
+      });
+    }
 
     return res.json({
       success: true,

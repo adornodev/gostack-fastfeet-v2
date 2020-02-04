@@ -13,6 +13,13 @@ class Order extends Model {
         sequelize,
       }
     );
+    /*
+    this.addHook('beforeSave', async user => {
+      if (user.password) {
+        user.password_hash = await bcrypt.hash(user.password, 8);
+      }
+    });
+    */
     return this;
   }
 

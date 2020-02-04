@@ -7,6 +7,7 @@ import OrderController from './app/controllers/OrderController';
 import RecipientController from './app/controllers/RecipientController';
 import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
+import WithdrawController from './app/controllers/WithdrawController';
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
@@ -40,5 +41,7 @@ routes.put('/orders/:id', authMiddleware, OrderController.update);
 routes.delete('/orders/:id', authMiddleware, OrderController.delete);
 routes.get('/orders/:id', authMiddleware, OrderController.show);
 routes.get('/orders', authMiddleware, OrderController.index);
+
+routes.put('/withdraws/:deliveryMan_id/:order_id', WithdrawController.update);
 
 export default routes;

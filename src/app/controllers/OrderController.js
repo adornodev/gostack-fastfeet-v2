@@ -15,7 +15,6 @@ class OrderController {
       where: {
         canceled_at: null,
         end_date: null,
-        start_date: null,
       },
       order: [['product', 'ASC']],
       attributes: ['id', 'product'],

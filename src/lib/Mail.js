@@ -18,7 +18,7 @@ class Mail {
   }
 
   sendMail(message) {
-    console.log(`Email enviado com sucesso: ${data}`);
+    console.log('Email enviado com sucesso');
 
     return this.transporter.sendMail({
       ...mailConfig.default,

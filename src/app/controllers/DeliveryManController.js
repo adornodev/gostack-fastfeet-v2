@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import DeliveryMan from '../models/DeliveryMan';
+import Order from '../models/Order';
 
 class DeliveryManController {
   async index(req, res) {
@@ -63,9 +64,15 @@ class DeliveryManController {
         .json({ error: 'Este entregador não está cadastrado!' });
     }
 
-    const { id, name, email, avatar_id } = deliveryManExists;
+    const ordersByDeliveryId = await Order.findAll({
+      where: {
+        deliveryman_id: deliveryManId,
+        canceled_at: null,
+        end_date: null,
+      },
+    });
 
-    return res.json({ id, name, email, avatar_id });
+    return res.json(ordersByDeliveryId);
   }
 
   async update(req, res) {

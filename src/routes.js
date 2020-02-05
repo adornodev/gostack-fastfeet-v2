@@ -35,7 +35,7 @@ routes.post(
 routes.post('/deliverymen', authMiddleware, DeliveryManController.store);
 routes.put('/deliverymen/:id', authMiddleware, DeliveryManController.update);
 routes.delete('/deliverymen/:id', authMiddleware, DeliveryManController.delete);
-routes.get('/deliverymen/:id', authMiddleware, DeliveryManController.show);
+routes.get('/deliverymen/:id', DeliveryManController.show);
 routes.get('/deliverymen', authMiddleware, DeliveryManController.index);
 
 routes.post('/orders', authMiddleware, OrderController.store);

@@ -5,6 +5,7 @@ import DeliveredController from './app/controllers/DeliveredController';
 import DeliveryManController from './app/controllers/DeliveryManController';
 import FileController from './app/controllers/FileController';
 import OrderController from './app/controllers/OrderController';
+import OrderProblemController from './app/controllers/OrderProblemController';
 import RecipientController from './app/controllers/RecipientController';
 import SessionController from './app/controllers/SessionController';
 import UserController from './app/controllers/UserController';
@@ -49,5 +50,19 @@ routes.put(
   upload.single('signature'),
   DeliveredController.update
 );
+
+routes.get('/order_problems', authMiddleware, OrderProblemController.index);
+routes.get(
+  '/order_problems/:order_id',
+  authMiddleware,
+  OrderProblemController.show
+);
+routes.put(
+  '/order_problems/:id/cancel',
+  authMiddleware,
+  OrderProblemController.update
+);
+
+routes.post('/order_problems/:order_id/', OrderProblemController.store);
 
 export default routes;
